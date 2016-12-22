@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mao.shop.mapper.ProductFeedbackMapper" >
+  <resultMap id="BaseResultMap" type="com.mao.shop.po.ProductFeedback" >
+    <id column="feed_id" property="feedId" jdbcType="INTEGER" />
+    <result column="cust_id" property="custId" jdbcType="INTEGER" />
+    <result column="item_id" property="itemId" jdbcType="INTEGER" />
+    <result column="fb_level" property="fbLevel" jdbcType="SMALLINT" />
+    <result column="fb_img" property="fbImg" jdbcType="VARCHAR" />
+    <result column="anonymous" property="anonymous" jdbcType="TINYINT" />
+    <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.mao.shop.po.ProductFeedback" extends="BaseResultMap" >
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    feed_id, cust_id, item_id, fb_level, fb_img, anonymous, created_at
+  </sql>
+  <sql id="Blob_Column_List" >
+    content
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from product_feedback
+    where feed_id = #{feedId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from product_feedback
+    where feed_id = #{feedId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mao.shop.po.ProductFeedback" >
+    insert into product_feedback (feed_id, cust_id, item_id, 
+      fb_level, fb_img, anonymous, 
+      created_at, content)
+    values (#{feedId,jdbcType=INTEGER}, #{custId,jdbcType=INTEGER}, #{itemId,jdbcType=INTEGER}, 
+      #{fbLevel,jdbcType=SMALLINT}, #{fbImg,jdbcType=VARCHAR}, #{anonymous,jdbcType=TINYINT}, 
+      #{createdAt,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mao.shop.po.ProductFeedback" >
+    insert into product_feedback
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="feedId != null" >
+        feed_id,
+      </if>
+      <if test="custId != null" >
+        cust_id,
+      </if>
+      <if test="itemId != null" >
+        item_id,
+      </if>
+      <if test="fbLevel != null" >
+        fb_level,
+      </if>
+      <if test="fbImg != null" >
+        fb_img,
+      </if>
+      <if test="anonymous != null" >
+        anonymous,
+      </if>
+      <if test="createdAt != null" >
+        created_at,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="feedId != null" >
+        #{feedId,jdbcType=INTEGER},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=INTEGER},
+      </if>
+      <if test="itemId != null" >
+        #{itemId,jdbcType=INTEGER},
+      </if>
+      <if test="fbLevel != null" >
+        #{fbLevel,jdbcType=SMALLINT},
+      </if>
+      <if test="fbImg != null" >
+        #{fbImg,jdbcType=VARCHAR},
+      </if>
+      <if test="anonymous != null" >
+        #{anonymous,jdbcType=TINYINT},
+      </if>
+      <if test="createdAt != null" >
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mao.shop.po.ProductFeedback" >
+    update product_feedback
+    <set >
+      <if test="custId != null" >
+        cust_id = #{custId,jdbcType=INTEGER},
+      </if>
+      <if test="itemId != null" >
+        item_id = #{itemId,jdbcType=INTEGER},
+      </if>
+      <if test="fbLevel != null" >
+        fb_level = #{fbLevel,jdbcType=SMALLINT},
+      </if>
+      <if test="fbImg != null" >
+        fb_img = #{fbImg,jdbcType=VARCHAR},
+      </if>
+      <if test="anonymous != null" >
+        anonymous = #{anonymous,jdbcType=TINYINT},
+      </if>
+      <if test="createdAt != null" >
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where feed_id = #{feedId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.mao.shop.po.ProductFeedback" >
+    update product_feedback
+    set cust_id = #{custId,jdbcType=INTEGER},
+      item_id = #{itemId,jdbcType=INTEGER},
+      fb_level = #{fbLevel,jdbcType=SMALLINT},
+      fb_img = #{fbImg,jdbcType=VARCHAR},
+      anonymous = #{anonymous,jdbcType=TINYINT},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where feed_id = #{feedId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mao.shop.po.ProductFeedback" >
+    update product_feedback
+    set cust_id = #{custId,jdbcType=INTEGER},
+      item_id = #{itemId,jdbcType=INTEGER},
+      fb_level = #{fbLevel,jdbcType=SMALLINT},
+      fb_img = #{fbImg,jdbcType=VARCHAR},
+      anonymous = #{anonymous,jdbcType=TINYINT},
+      created_at = #{createdAt,jdbcType=TIMESTAMP}
+    where feed_id = #{feedId,jdbcType=INTEGER}
+  </update>
+  
+  <select id="selectCount" parameterType="map" resultType="int">
+  	select count(*) from product_feedback pf,order_item oi
+	where pf.item_id = oi.item_id
+	AND oi.product_id = #{pid}
+	<if test="fblever != null">AND pf.fb_level = #{fblever}</if>
+  </select>
+  
+  <resultMap type="com.mao.shop.po.ProductFeedback" id="selectByPageRm" extends="BaseResultMap">
+  	<result column="sku" property="sku"/>
+  	<result column="custName" property="custName"/>
+  </resultMap>
+  <select id="selectByPage" parameterType="map" resultMap="selectByPageRm">
+  	select pf.*,oi.sku_spec sku,c.user_name custName
+	from product_feedback pf,order_item oi,customer c
+	where pf.item_id = oi.item_id
+	and oi.product_id = #{pid}
+	and pf.cust_id = c.cid
+	<if test="fblever != null">AND pf.fb_level = #{fblever}</if>
+	ORDER BY pf.feed_id DESC
+	LIMIT #{begin},#{size}
+  </select>
+  
+  <select id="selectFeedNum" parameterType="int" resultType="com.mao.shop.po.FeedbackLever">
+  	select count(*) allFeed,
+  	sum(case when pf.fb_level = 1 then 1 else 0 end) praise,
+	sum(case when pf.fb_level = 2 then 1 else 0 end) medEval,
+	sum(case when pf.fb_level = 3 then 1 else 0 end) bad
+	from product_feedback pf,order_item oi
+	where pf.item_id = oi.item_id
+	and oi.product_id = #{pid}
+  </select>
+  
+  <resultMap type="com.mao.shop.po.ProductFeedback" id="selectNewFb" extends="BaseResultMap">
+  	<result column="product_id" property="productId"/>
+  	<result column="pro_name" property="sku"/>
+  </resultMap>
+  <select id="selectNewFeedback" resultMap="selectNewFb">
+  	SELECT pfb.*,oi.product_id,oi.pro_name 
+  	FROM product_feedback pfb,order_item oi
+	WHERE pfb.item_id = oi.item_id
+	ORDER BY pfb.created_at DESC
+	limit 0,4
+  </select>
+  
+  <resultMap type="com.mao.shop.po.ProductFeedback" id="selectByItemIdRm" extends="BaseResultMap">
+  	<result column="pname" property="custName"/>
+  	<result column="pirture" property="sku"/>
+  </resultMap>
+  <select id="selectByItemId" parameterType="map" resultMap="selectByItemIdRm">
+  	select pf.*,oi.pro_name pname,pim.filepath pirture
+	from product_feedback pf,order_item oi,product_image pim 
+	where pf.item_id = oi.item_id
+	and oi.item_id = #{itemId}
+	and pf.cust_id = #{custId}
+	and oi.product_id = pim.product_id
+	and pim.sort_order = 1
+  </select>
+</mapper>

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mao.shop.mapper.ProductBrandMapper" >
+  <resultMap id="BaseResultMap" type="com.mao.shop.po.ProductBrand" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="logo_path" property="logoPath" jdbcType="VARCHAR" />
+    <result column="sort_order" property="sortOrder" jdbcType="VARCHAR" />
+    <result column="website" property="website" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.mao.shop.po.ProductBrand" extends="BaseResultMap" >
+    <result column="desct" property="desct" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, logo_path, sort_order, website
+  </sql>
+  <sql id="Blob_Column_List" >
+    desct
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from product_brand
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from product_brand
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mao.shop.po.ProductBrand" >
+    insert into product_brand (id, name, logo_path, 
+      sort_order, website, desct
+      )
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{logoPath,jdbcType=VARCHAR}, 
+      #{sortOrder,jdbcType=VARCHAR}, #{website,jdbcType=VARCHAR}, #{desct,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.mao.shop.po.ProductBrand" >
+    insert into product_brand
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="logoPath != null" >
+        logo_path,
+      </if>
+      <if test="sortOrder != null" >
+        sort_order,
+      </if>
+      <if test="website != null" >
+        website,
+      </if>
+      <if test="desct != null" >
+        desct,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="logoPath != null" >
+        #{logoPath,jdbcType=VARCHAR},
+      </if>
+      <if test="sortOrder != null" >
+        #{sortOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="website != null" >
+        #{website,jdbcType=VARCHAR},
+      </if>
+      <if test="desct != null" >
+        #{desct,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mao.shop.po.ProductBrand" >
+    update product_brand
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="logoPath != null" >
+        logo_path = #{logoPath,jdbcType=VARCHAR},
+      </if>
+      <if test="sortOrder != null" >
+        sort_order = #{sortOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="website != null" >
+        website = #{website,jdbcType=VARCHAR},
+      </if>
+      <if test="desct != null" >
+        desct = #{desct,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.mao.shop.po.ProductBrand" >
+    update product_brand
+    set name = #{name,jdbcType=VARCHAR},
+      logo_path = #{logoPath,jdbcType=VARCHAR},
+      sort_order = #{sortOrder,jdbcType=VARCHAR},
+      website = #{website,jdbcType=VARCHAR},
+      desct = #{desct,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mao.shop.po.ProductBrand" >
+    update product_brand
+    set name = #{name,jdbcType=VARCHAR},
+      logo_path = #{logoPath,jdbcType=VARCHAR},
+      sort_order = #{sortOrder,jdbcType=VARCHAR},
+      website = #{website,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="selectCount" resultType="int">
+  	select COUNT(*) from product_brand
+  </select>
+  
+  <select id="selectByPage" parameterType="map" resultMap="ResultMapWithBLOBs">
+  	select * from product_brand p ORDER BY p.id desc LIMIT #{begin},#{size}
+  </select>
+  
+  <select id="selectByName" parameterType="string" resultMap="ResultMapWithBLOBs">
+  	select * from product_brand p where p.`name` = #{brandName}
+  </select>
+  
+  <select id="selectSortList" resultType="string">
+  		select DISTINCT pb.sort_order from product_brand pb
+  </select>
+  
+  <select id="selectBySortChar" parameterType="string" resultMap="BaseResultMap">
+  		select * from product_brand pb where pb.sort_order = #{sortChar}
+  </select>
+  
+  <select id="selectByCsid" parameterType="int" resultMap="BaseResultMap">
+  		SELECT DISTINCT pb.id,pb.`name` FROM product p,product_brand pb,category_second cs
+		WHERE cs.id = #{cid}
+		AND p.cat_id = cs.id
+		AND pb.id = p.brand_id
+  </select>
+</mapper>

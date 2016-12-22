@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mao.shop.mapper.ProductAttrMapper" >
+  <resultMap id="BaseResultMap" type="com.mao.shop.po.ProductAttr" >
+    <id column="pa_id" property="paId" jdbcType="INTEGER" />
+    <result column="cate_id" property="cateId" jdbcType="INTEGER" />
+    <result column="attr_name" property="attrName" jdbcType="VARCHAR" />
+    <result column="attr_type" property="attrType" jdbcType="TINYINT" />
+    <result column="option_values" property="optionValues" jdbcType="VARCHAR" />
+    <result column="is_spec" property="isSpec" jdbcType="BIT" />
+    <result column="is_select" property="isSelect" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pa_id, cate_id, attr_name, attr_type, option_values, is_spec, is_select
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from product_attr
+    where pa_id = #{paId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from product_attr
+    where pa_id = #{paId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mao.shop.po.ProductAttr" >
+    insert into product_attr (pa_id, cate_id, attr_name, 
+      attr_type, option_values, is_spec, 
+      is_select)
+    values (#{paId,jdbcType=INTEGER}, #{cateId,jdbcType=INTEGER}, #{attrName,jdbcType=VARCHAR}, 
+      #{attrType,jdbcType=TINYINT}, #{optionValues,jdbcType=VARCHAR}, #{isSpec,jdbcType=BIT}, 
+      #{isSelect,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mao.shop.po.ProductAttr" >
+    insert into product_attr
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="paId != null" >
+        pa_id,
+      </if>
+      <if test="cateId != null" >
+        cate_id,
+      </if>
+      <if test="attrName != null" >
+        attr_name,
+      </if>
+      <if test="attrType != null" >
+        attr_type,
+      </if>
+      <if test="optionValues != null" >
+        option_values,
+      </if>
+      <if test="isSpec != null" >
+        is_spec,
+      </if>
+      <if test="isSelect != null" >
+        is_select,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="paId != null" >
+        #{paId,jdbcType=INTEGER},
+      </if>
+      <if test="cateId != null" >
+        #{cateId,jdbcType=INTEGER},
+      </if>
+      <if test="attrName != null" >
+        #{attrName,jdbcType=VARCHAR},
+      </if>
+      <if test="attrType != null" >
+        #{attrType,jdbcType=TINYINT},
+      </if>
+      <if test="optionValues != null" >
+        #{optionValues,jdbcType=VARCHAR},
+      </if>
+      <if test="isSpec != null" >
+        #{isSpec,jdbcType=BIT},
+      </if>
+      <if test="isSelect != null" >
+        #{isSelect,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mao.shop.po.ProductAttr" >
+    update product_attr
+    <set >
+      <if test="cateId != null" >
+        cate_id = #{cateId,jdbcType=INTEGER},
+      </if>
+      <if test="attrName != null" >
+        attr_name = #{attrName,jdbcType=VARCHAR},
+      </if>
+      <if test="attrType != null" >
+        attr_type = #{attrType,jdbcType=TINYINT},
+      </if>
+      <if test="optionValues != null" >
+        option_values = #{optionValues,jdbcType=VARCHAR},
+      </if>
+      <if test="isSpec != null" >
+        is_spec = #{isSpec,jdbcType=BIT},
+      </if>
+      <if test="isSelect != null" >
+        is_select = #{isSelect,jdbcType=BIT},
+      </if>
+    </set>
+    where pa_id = #{paId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mao.shop.po.ProductAttr" >
+    update product_attr
+    set cate_id = #{cateId,jdbcType=INTEGER},
+      attr_name = #{attrName,jdbcType=VARCHAR},
+      attr_type = #{attrType,jdbcType=TINYINT},
+      option_values = #{optionValues,jdbcType=VARCHAR},
+      is_spec = #{isSpec,jdbcType=BIT},
+      is_select = #{isSelect,jdbcType=BIT}
+    where pa_id = #{paId,jdbcType=INTEGER}
+  </update>
+  
+   <select id="selectCount" resultType="int">
+  	select count(*) from product_attr
+  </select>
+  
+  <resultMap type="com.mao.shop.po.ProductAttr" id="selectByPageRm" extends="BaseResultMap">
+  		<result column="cateName" property="cateName" />
+  </resultMap>
+  <select id="selectByPage" parameterType="map" resultMap="selectByPageRm">
+  	select cs.`name` cateName,pa.* from product_attr pa,category_second cs
+	where pa.cate_id = cs.id ORDER BY pa.pa_id DESC LIMIT #{begin},#{size}
+  </select>
+  
+  <select id="selectByAttrNameforCs" resultType="map" resultMap="BaseResultMap">
+  	select * from product_attr pa where pa.cate_id = #{csid} and pa.attr_name = #{attrName} 
+  </select>
+  
+  <select id="selectCountByCsid" parameterType="int" resultType="int">
+  	select count(*) from product_attr pa where pa.cate_id = #{csid}
+  </select>
+  
+  <select id="selectByPageAndCsid" parameterType="map" resultMap="selectByPageRm">
+  	select cs.`name` cateName,pa.* from product_attr pa,category_second cs
+	where pa.cate_id = cs.id AND pa.cate_id = #{csid} ORDER BY pa.pa_id DESC LIMIT #{begin},#{size}
+  </select>
+  
+  <select id="selectSpecOrNot" parameterType="map" resultMap="BaseResultMap">
+  		SELECT * from product_attr pa where pa.is_spec = #{isSpec} AND pa.cate_id = #{cateId}
+  </select>
+  
+  <select id="selectAttrByCsid" parameterType="int" resultMap="BaseResultMap">
+  	select * from product_attr pa where pa.is_select = 1 AND pa.cate_id = #{cid}
+  </select>
+</mapper>

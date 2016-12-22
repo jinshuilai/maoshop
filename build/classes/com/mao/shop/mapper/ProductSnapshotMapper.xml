@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mao.shop.mapper.ProductSnapshotMapper" >
+  <resultMap id="BaseResultMap" type="com.mao.shop.po.ProductSnapshot" >
+    <id column="snap_id" property="snapId" jdbcType="INTEGER" />
+    <result column="product_id" property="productId" jdbcType="INTEGER" />
+    <result column="product_name" property="productName" jdbcType="VARCHAR" />
+    <result column="product_img" property="productImg" jdbcType="VARCHAR" />
+    <result column="spec" property="spec" jdbcType="VARCHAR" />
+    <result column="buy_price" property="buyPrice" jdbcType="DECIMAL" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.mao.shop.po.ProductSnapshot" extends="BaseResultMap" >
+  	 <result column="paramter" property="paramter" jdbcType="LONGVARCHAR" />
+    <result column="desctext" property="desctext" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    snap_id, product_id, product_name,product_img, spec, buy_price 
+  </sql>
+  <sql id="Blob_Column_List" >
+    paramter,desctext
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from product_snapshot
+    where snap_id = #{snapId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from product_snapshot
+    where snap_id = #{snapId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mao.shop.po.ProductSnapshot" >
+  <selectKey keyProperty="snapId" order="AFTER" resultType="java.lang.Integer">
+  		SELECT LAST_INSERT_ID()
+  	</selectKey>
+    insert into product_snapshot (snap_id, product_id, product_name, product_img, 
+      spec, buy_price, paramter, 
+      desctext)
+    values (#{snapId,jdbcType=INTEGER}, #{productId,jdbcType=INTEGER}, #{productName,jdbcType=VARCHAR}, 
+      #{productImg,jdbcType=VARCHAR},#{spec,jdbcType=VARCHAR}, #{buyPrice,jdbcType=DECIMAL}, 
+      #{paramter,jdbcType=LONGVARCHAR}, #{desctext,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mao.shop.po.ProductSnapshot" >
+    insert into product_snapshot
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="snapId != null" >
+        snap_id,
+      </if>
+      <if test="productId != null" >
+        product_id,
+      </if>
+      <if test="productName != null" >
+        product_name,
+      </if>
+      <if test="spec != null" >
+        spec,
+      </if>
+      <if test="buyPrice != null" >
+        buy_price,
+      </if>
+      <if test="paramter != null" >
+        paramter,
+      </if>
+      <if test="desctext != null" >
+        desctext,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="snapId != null" >
+        #{snapId,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="productName != null" >
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="spec != null" >
+        #{spec,jdbcType=VARCHAR},
+      </if>
+      <if test="buyPrice != null" >
+        #{buyPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="paramter != null" >
+        #{paramter,jdbcType=VARCHAR},
+      </if>
+      <if test="desctext != null" >
+        #{desctext,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mao.shop.po.ProductSnapshot" >
+    update product_snapshot
+    <set >
+      <if test="productId != null" >
+        product_id = #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="productName != null" >
+        product_name = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="spec != null" >
+        spec = #{spec,jdbcType=VARCHAR},
+      </if>
+      <if test="buyPrice != null" >
+        buy_price = #{buyPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="paramter != null" >
+        paramter = #{paramter,jdbcType=VARCHAR},
+      </if>
+      <if test="desctext != null" >
+        desctext = #{desctext,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where snap_id = #{snapId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.mao.shop.po.ProductSnapshot" >
+    update product_snapshot
+    set product_id = #{productId,jdbcType=INTEGER},
+      product_name = #{productName,jdbcType=VARCHAR},
+      spec = #{spec,jdbcType=VARCHAR},
+      buy_price = #{buyPrice,jdbcType=DECIMAL},
+      paramter = #{paramter,jdbcType=VARCHAR},
+      desctext = #{desctext,jdbcType=LONGVARCHAR}
+    where snap_id = #{snapId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mao.shop.po.ProductSnapshot" >
+    update product_snapshot
+    set product_id = #{productId,jdbcType=INTEGER},
+      product_name = #{productName,jdbcType=VARCHAR},
+      spec = #{spec,jdbcType=VARCHAR},
+      buy_price = #{buyPrice,jdbcType=DECIMAL},
+      paramter = #{paramter,jdbcType=VARCHAR}
+    where snap_id = #{snapId,jdbcType=INTEGER}
+  </update>
+</mapper>

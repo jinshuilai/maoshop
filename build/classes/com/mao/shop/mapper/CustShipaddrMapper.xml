@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mao.shop.mapper.CustShipaddrMapper" >
+  <resultMap id="BaseResultMap" type="com.mao.shop.po.CustShipaddr" >
+    <id column="shipid" property="shipid" jdbcType="INTEGER" />
+    <result column="customer_id" property="customerId" jdbcType="INTEGER" />
+    <result column="consignee" property="consignee" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="postcode" property="postcode" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="province_id" property="provinceId" jdbcType="SMALLINT" />
+    <result column="city_id" property="cityId" jdbcType="SMALLINT" />
+    <result column="district_id" property="districtId" jdbcType="SMALLINT" />
+    <result column="is_default" property="isDefault" jdbcType="BIT" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    shipid, customer_id, consignee, phone, postcode, address, province_id, city_id, district_id, 
+    is_default, remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from cust_shipaddr
+    where shipid = #{shipid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from cust_shipaddr
+    where shipid = #{shipid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mao.shop.po.CustShipaddr" >
+    insert into cust_shipaddr (shipid, customer_id, consignee, 
+      phone, postcode, address, 
+      province_id, city_id, district_id, 
+      is_default, remark)
+    values (#{shipid,jdbcType=INTEGER}, #{customerId,jdbcType=INTEGER}, #{consignee,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{postcode,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{provinceId,jdbcType=SMALLINT}, #{cityId,jdbcType=SMALLINT}, #{districtId,jdbcType=SMALLINT}, 
+      #{isDefault,jdbcType=BIT}, #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mao.shop.po.CustShipaddr" >
+    insert into cust_shipaddr
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="shipid != null" >
+        shipid,
+      </if>
+      <if test="customerId != null" >
+        customer_id,
+      </if>
+      <if test="consignee != null" >
+        consignee,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="postcode != null" >
+        postcode,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="provinceId != null" >
+        province_id,
+      </if>
+      <if test="cityId != null" >
+        city_id,
+      </if>
+      <if test="districtId != null" >
+        district_id,
+      </if>
+      <if test="isDefault != null" >
+        is_default,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="shipid != null" >
+        #{shipid,jdbcType=INTEGER},
+      </if>
+      <if test="customerId != null" >
+        #{customerId,jdbcType=INTEGER},
+      </if>
+      <if test="consignee != null" >
+        #{consignee,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="postcode != null" >
+        #{postcode,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceId != null" >
+        #{provinceId,jdbcType=SMALLINT},
+      </if>
+      <if test="cityId != null" >
+        #{cityId,jdbcType=SMALLINT},
+      </if>
+      <if test="districtId != null" >
+        #{districtId,jdbcType=SMALLINT},
+      </if>
+      <if test="isDefault != null" >
+        #{isDefault,jdbcType=BIT},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mao.shop.po.CustShipaddr" >
+    update cust_shipaddr
+    <set >
+      <if test="customerId != null" >
+        customer_id = #{customerId,jdbcType=INTEGER},
+      </if>
+      <if test="consignee != null" >
+        consignee = #{consignee,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="postcode != null" >
+        postcode = #{postcode,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceId != null" >
+        province_id = #{provinceId,jdbcType=SMALLINT},
+      </if>
+      <if test="cityId != null" >
+        city_id = #{cityId,jdbcType=SMALLINT},
+      </if>
+      <if test="districtId != null" >
+        district_id = #{districtId,jdbcType=SMALLINT},
+      </if>
+      <if test="isDefault != null" >
+        is_default = #{isDefault,jdbcType=BIT},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where shipid = #{shipid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mao.shop.po.CustShipaddr" >
+    update cust_shipaddr
+    set customer_id = #{customerId,jdbcType=INTEGER},
+      consignee = #{consignee,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      postcode = #{postcode,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      province_id = #{provinceId,jdbcType=SMALLINT},
+      city_id = #{cityId,jdbcType=SMALLINT},
+      district_id = #{districtId,jdbcType=SMALLINT},
+      is_default = #{isDefault,jdbcType=BIT},
+      remark = #{remark,jdbcType=VARCHAR}
+    where shipid = #{shipid,jdbcType=INTEGER}
+  </update>
+  
+    <resultMap type="com.mao.shop.po.CustShipaddr" id="selectByUserIdRm" extends="BaseResultMap">
+  	<result column="province" property="province"/>
+  	<result column="city" property="city"/>
+  	<result column="district" property="district"/>
+  </resultMap>
+  <select id="selectByUserId" parameterType="int" resultMap="selectByUserIdRm">
+  	select cs.*,r1.region_name province,r2.region_name city,r3.region_name district
+	from cust_shipaddr cs,region r1,region r2,region r3
+	WHERE cs.province_id = r1.region_id
+	AND cs.city_id = r2.region_id
+	AND cs.district_id = r3.region_id
+	AND cs.customer_id = #{id}
+  </select>
+  
+  <update id="updateIsDefault" parameterType="int">
+  	update cust_shipaddr cs set cs.is_default = 0 where cs.customer_id = #{id} 
+  </update>
+  
+  <update id="updateDefault" parameterType="int">
+  	update cust_shipaddr set is_default = 1 where shipid = #{id}
+  </update>
+</mapper>

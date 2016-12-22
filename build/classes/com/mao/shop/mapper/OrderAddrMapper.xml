@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mao.shop.mapper.OrderAddrMapper" >
+  <resultMap id="BaseResultMap" type="com.mao.shop.po.OrderAddr" >
+    <id column="oadd_id" property="oaddId" jdbcType="INTEGER" />
+    <result column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="consignee" property="consignee" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="postcode" property="postcode" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="province_id" property="provinceId" jdbcType="SMALLINT" />
+    <result column="city_id" property="cityId" jdbcType="SMALLINT" />
+    <result column="district_id" property="districtId" jdbcType="SMALLINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    oadd_id, order_id, consignee, phone, postcode, address, province_id, city_id, district_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from order_addr
+    where oadd_id = #{oaddId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from order_addr
+    where oadd_id = #{oaddId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mao.shop.po.OrderAddr" >
+    insert into order_addr (oadd_id, order_id, consignee, 
+      phone, postcode, address, 
+      province_id, city_id, district_id
+      )
+    values (#{oaddId,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER}, #{consignee,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{postcode,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{provinceId,jdbcType=SMALLINT}, #{cityId,jdbcType=SMALLINT}, #{districtId,jdbcType=SMALLINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.mao.shop.po.OrderAddr" >
+    insert into order_addr
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="oaddId != null" >
+        oadd_id,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="consignee != null" >
+        consignee,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="postcode != null" >
+        postcode,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="provinceId != null" >
+        province_id,
+      </if>
+      <if test="cityId != null" >
+        city_id,
+      </if>
+      <if test="districtId != null" >
+        district_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="oaddId != null" >
+        #{oaddId,jdbcType=INTEGER},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="consignee != null" >
+        #{consignee,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="postcode != null" >
+        #{postcode,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceId != null" >
+        #{provinceId,jdbcType=SMALLINT},
+      </if>
+      <if test="cityId != null" >
+        #{cityId,jdbcType=SMALLINT},
+      </if>
+      <if test="districtId != null" >
+        #{districtId,jdbcType=SMALLINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mao.shop.po.OrderAddr" >
+    update order_addr
+    <set >
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="consignee != null" >
+        consignee = #{consignee,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="postcode != null" >
+        postcode = #{postcode,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceId != null" >
+        province_id = #{provinceId,jdbcType=SMALLINT},
+      </if>
+      <if test="cityId != null" >
+        city_id = #{cityId,jdbcType=SMALLINT},
+      </if>
+      <if test="districtId != null" >
+        district_id = #{districtId,jdbcType=SMALLINT},
+      </if>
+    </set>
+    where oadd_id = #{oaddId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mao.shop.po.OrderAddr" >
+    update order_addr
+    set order_id = #{orderId,jdbcType=INTEGER},
+      consignee = #{consignee,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      postcode = #{postcode,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      province_id = #{provinceId,jdbcType=SMALLINT},
+      city_id = #{cityId,jdbcType=SMALLINT},
+      district_id = #{districtId,jdbcType=SMALLINT}
+    where oadd_id = #{oaddId,jdbcType=INTEGER}
+  </update>
+  
+  <resultMap type="com.mao.shop.po.OrderAddr" id="selectByOidIdRm" extends="BaseResultMap">
+  	<result column="province" property="province"/>
+  	<result column="city" property="city"/>
+  	<result column="district" property="district"/>
+  </resultMap>
+  <select id="selectByOrderId" parameterType="int" resultMap="selectByOidIdRm">
+  	select oa.*,r1.region_name province,r2.region_name city,r3.region_name district
+	from order_addr oa,region r1,region r2,region r3
+	WHERE oa.province_id = r1.region_id
+	AND oa.city_id = r2.region_id
+	AND oa.district_id = r3.region_id
+	AND oa.order_id = #{id}
+  </select>
+</mapper>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<mappers>
+		<mapper resource="com/mao/shop/mapper/CategoryMapper.xml"/>
+		<mapper resource="com/mao/shop/mapper/CategorySecondMapper.xml"/>
+		<mapper resource="com/mao/shop/mapper/ProductBrandMapper.xml"/>
+		<mapper resource="com/mao/shop/mapper/ProductAttrMapper.xml"/>
+		<mapper resource="com/mao/shop/mapper/ProductAttrValueMapper.xml"/>
+		<mapper resource="com/mao/shop/mapper/ProductMapper.xml"/>
+		<mapper resource="com/mao/shop/mapper/ProductImageMapper.xml"/>
+		<mapper resource="com/mao/shop/mapper/ProductSkuMapper.xml"/>
+		<mapper resource="com/mao/shop/mapper/ProductSpecMapper.xml"/>
+		<mapper resource="com/mao/shop/mapper/CustomerMapper.xml"/>
+		<mapper resource="com/mao/shop/mapper/CustShipaddrMapper.xml"/>
+		<mapper resource="com/mao/shop/mapper/RegionMapper.xml"/>
+		<mapper resource="com/mao/shop/mapper/OrdersMapper.xml"/>
+		<mapper resource="com/mao/shop/mapper/OrderItemMapper.xml"/>
+		<mapper resource="com/mao/shop/mapper/OrderAddrMapper.xml"/>
+		<mapper resource="com/mao/shop/mapper/ProductSnapshotMapper.xml"/>
+		<mapper resource="com/mao/shop/mapper/ProductFeedbackMapper.xml"/>
+	</mappers>
+
+</configuration>

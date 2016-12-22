@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mao.shop.mapper.ProductImageMapper" >
+  <resultMap id="BaseResultMap" type="com.mao.shop.po.ProductImage" >
+    <id column="pim_id" property="pimId" jdbcType="INTEGER" />
+    <result column="product_id" property="productId" jdbcType="INTEGER" />
+    <result column="image_name" property="imageName" jdbcType="VARCHAR" />
+    <result column="filepath" property="filepath" jdbcType="VARCHAR" />
+    <result column="sort_order" property="sortOrder" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pim_id, product_id, image_name, filepath, sort_order
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from product_image
+    where pim_id = #{pimId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from product_image
+    where pim_id = #{pimId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mao.shop.po.ProductImage" >
+    insert into product_image (pim_id, product_id, image_name, 
+      filepath, sort_order)
+    values (#{pimId,jdbcType=INTEGER}, #{productId,jdbcType=INTEGER}, #{imageName,jdbcType=VARCHAR}, 
+      #{filepath,jdbcType=VARCHAR}, #{sortOrder,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mao.shop.po.ProductImage" >
+    insert into product_image
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pimId != null" >
+        pim_id,
+      </if>
+      <if test="productId != null" >
+        product_id,
+      </if>
+      <if test="imageName != null" >
+        image_name,
+      </if>
+      <if test="filepath != null" >
+        filepath,
+      </if>
+      <if test="sortOrder != null" >
+        sort_order,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pimId != null" >
+        #{pimId,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="imageName != null" >
+        #{imageName,jdbcType=VARCHAR},
+      </if>
+      <if test="filepath != null" >
+        #{filepath,jdbcType=VARCHAR},
+      </if>
+      <if test="sortOrder != null" >
+        #{sortOrder,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mao.shop.po.ProductImage" >
+    update product_image
+    <set >
+      <if test="productId != null" >
+        product_id = #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="imageName != null" >
+        image_name = #{imageName,jdbcType=VARCHAR},
+      </if>
+      <if test="filepath != null" >
+        filepath = #{filepath,jdbcType=VARCHAR},
+      </if>
+      <if test="sortOrder != null" >
+        sort_order = #{sortOrder,jdbcType=TINYINT},
+      </if>
+    </set>
+    where pim_id = #{pimId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mao.shop.po.ProductImage" >
+    update product_image
+    set product_id = #{productId,jdbcType=INTEGER},
+      image_name = #{imageName,jdbcType=VARCHAR},
+      filepath = #{filepath,jdbcType=VARCHAR},
+      sort_order = #{sortOrder,jdbcType=TINYINT}
+    where pim_id = #{pimId,jdbcType=INTEGER}
+  </update>
+  
+  <delete id="deleteByPid" parameterType="int">
+  	delete from product_image where product_id = #{pid}
+  </delete>
+</mapper>

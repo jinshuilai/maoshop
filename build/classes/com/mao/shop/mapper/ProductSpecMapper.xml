@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mao.shop.mapper.ProductSpecMapper" >
+  <resultMap id="BaseResultMap" type="com.mao.shop.po.ProductSpec" >
+    <id column="sp_id" property="spId" jdbcType="INTEGER" />
+    <result column="skuid" property="skuid" jdbcType="INTEGER" />
+    <result column="attrid" property="attrid" jdbcType="INTEGER" />
+    <result column="attrvalue" property="attrvalue" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    sp_id, skuid, attrid, attrvalue
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from product_spec
+    where sp_id = #{spId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from product_spec
+    where sp_id = #{spId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mao.shop.po.ProductSpec" >
+    insert into product_spec (sp_id, skuid, attrid, 
+      attrvalue)
+    values (#{spId,jdbcType=INTEGER}, #{skuid,jdbcType=INTEGER}, #{attrid,jdbcType=INTEGER}, 
+      #{attrvalue,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mao.shop.po.ProductSpec" >
+    insert into product_spec
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="spId != null" >
+        sp_id,
+      </if>
+      <if test="skuid != null" >
+        skuid,
+      </if>
+      <if test="attrid != null" >
+        attrid,
+      </if>
+      <if test="attrvalue != null" >
+        attrvalue,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="spId != null" >
+        #{spId,jdbcType=INTEGER},
+      </if>
+      <if test="skuid != null" >
+        #{skuid,jdbcType=INTEGER},
+      </if>
+      <if test="attrid != null" >
+        #{attrid,jdbcType=INTEGER},
+      </if>
+      <if test="attrvalue != null" >
+        #{attrvalue,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mao.shop.po.ProductSpec" >
+    update product_spec
+    <set >
+      <if test="skuid != null" >
+        skuid = #{skuid,jdbcType=INTEGER},
+      </if>
+      <if test="attrid != null" >
+        attrid = #{attrid,jdbcType=INTEGER},
+      </if>
+      <if test="attrvalue != null" >
+        attrvalue = #{attrvalue,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where sp_id = #{spId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mao.shop.po.ProductSpec" >
+    update product_spec
+    set skuid = #{skuid,jdbcType=INTEGER},
+      attrid = #{attrid,jdbcType=INTEGER},
+      attrvalue = #{attrvalue,jdbcType=VARCHAR}
+    where sp_id = #{spId,jdbcType=INTEGER}
+  </update>
+  
+  <delete id="deleteBySkuId" parameterType="int">
+  	delete from product_spec where skuid = #{skuid}
+  </delete>
+</mapper>

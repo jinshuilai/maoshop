@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mao.shop.mapper.ProductMapper" >
+  <resultMap id="BaseResultMap" type="com.mao.shop.po.Product" >
+    <id column="pro_id" property="proId" jdbcType="INTEGER" />
+    <result column="cat_id" property="catId" jdbcType="INTEGER" />
+    <result column="brand_id" property="brandId" jdbcType="INTEGER" />
+    <result column="pname" property="pname" jdbcType="VARCHAR" />
+    <result column="tag" property="tag" jdbcType="VARCHAR" />
+    <result column="short_desc" property="shortDesc" jdbcType="VARCHAR" />
+    <result column="show_status" property="showStatus" jdbcType="TINYINT" />
+    <result column="is_hot" property="isHot" jdbcType="TINYINT" />
+    <result column="on_sale_at" property="onSaleAt" jdbcType="TIMESTAMP" />
+    <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.mao.shop.po.Product" extends="BaseResultMap" >
+    <result column="desctext" property="desctext" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pro_id, cat_id, brand_id, pname, tag, short_desc, show_status, is_hot, on_sale_at, 
+    updated_at
+  </sql>
+  <sql id="Blob_Column_List" >
+    desctext
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from product
+    where pro_id = #{proId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from product
+    where pro_id = #{proId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mao.shop.po.Product" >
+   <selectKey keyProperty="proId" order="AFTER" resultType="java.lang.Integer">
+  		SELECT LAST_INSERT_ID()
+  	</selectKey>
+    insert into product (pro_id, cat_id, brand_id, 
+      pname, tag, short_desc, 
+      show_status, is_hot, on_sale_at, 
+      updated_at, desctext)
+    values (#{proId,jdbcType=INTEGER}, #{catId,jdbcType=INTEGER}, #{brandId,jdbcType=INTEGER}, 
+      #{pname,jdbcType=VARCHAR}, #{tag,jdbcType=VARCHAR}, #{shortDesc,jdbcType=VARCHAR}, 
+      #{showStatus,jdbcType=TINYINT}, #{isHot,jdbcType=TINYINT}, #{onSaleAt,jdbcType=TIMESTAMP}, 
+      #{updatedAt,jdbcType=TIMESTAMP}, #{desctext,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mao.shop.po.Product" >
+    insert into product
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="proId != null" >
+        pro_id,
+      </if>
+      <if test="catId != null" >
+        cat_id,
+      </if>
+      <if test="brandId != null" >
+        brand_id,
+      </if>
+      <if test="pname != null" >
+        pname,
+      </if>
+      <if test="tag != null" >
+        tag,
+      </if>
+      <if test="shortDesc != null" >
+        short_desc,
+      </if>
+      <if test="showStatus != null" >
+        show_status,
+      </if>
+      <if test="isHot != null" >
+        is_hot,
+      </if>
+      <if test="onSaleAt != null" >
+        on_sale_at,
+      </if>
+      <if test="updatedAt != null" >
+        updated_at,
+      </if>
+      <if test="desctext != null" >
+        desctext,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="proId != null" >
+        #{proId,jdbcType=INTEGER},
+      </if>
+      <if test="catId != null" >
+        #{catId,jdbcType=INTEGER},
+      </if>
+      <if test="brandId != null" >
+        #{brandId,jdbcType=INTEGER},
+      </if>
+      <if test="pname != null" >
+        #{pname,jdbcType=VARCHAR},
+      </if>
+      <if test="tag != null" >
+        #{tag,jdbcType=VARCHAR},
+      </if>
+      <if test="shortDesc != null" >
+        #{shortDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="showStatus != null" >
+        #{showStatus,jdbcType=TINYINT},
+      </if>
+      <if test="isHot != null" >
+        #{isHot,jdbcType=TINYINT},
+      </if>
+      <if test="onSaleAt != null" >
+        #{onSaleAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null" >
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="desctext != null" >
+        #{desctext,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mao.shop.po.Product" >
+    update product
+    <set >
+      <if test="catId != null" >
+        cat_id = #{catId,jdbcType=INTEGER},
+      </if>
+      <if test="brandId != null" >
+        brand_id = #{brandId,jdbcType=INTEGER},
+      </if>
+      <if test="pname != null" >
+        pname = #{pname,jdbcType=VARCHAR},
+      </if>
+      <if test="tag != null" >
+        tag = #{tag,jdbcType=VARCHAR},
+      </if>
+      <if test="shortDesc != null" >
+        short_desc = #{shortDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="showStatus != null" >
+        show_status = #{showStatus,jdbcType=TINYINT},
+      </if>
+      <if test="isHot != null" >
+        is_hot = #{isHot,jdbcType=TINYINT},
+      </if>
+      <if test="onSaleAt != null" >
+        on_sale_at = #{onSaleAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null" >
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="desctext != null" >
+        desctext = #{desctext,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where pro_id = #{proId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.mao.shop.po.Product" >
+    update product
+    set cat_id = #{catId,jdbcType=INTEGER},
+      brand_id = #{brandId,jdbcType=INTEGER},
+      pname = #{pname,jdbcType=VARCHAR},
+      tag = #{tag,jdbcType=VARCHAR},
+      short_desc = #{shortDesc,jdbcType=VARCHAR},
+      show_status = #{showStatus,jdbcType=TINYINT},
+      is_hot = #{isHot,jdbcType=TINYINT},
+      on_sale_at = #{onSaleAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      desctext = #{desctext,jdbcType=LONGVARCHAR}
+    where pro_id = #{proId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mao.shop.po.Product" >
+    update product
+    set cat_id = #{catId,jdbcType=INTEGER},
+      brand_id = #{brandId,jdbcType=INTEGER},
+      pname = #{pname,jdbcType=VARCHAR},
+      tag = #{tag,jdbcType=VARCHAR},
+      short_desc = #{shortDesc,jdbcType=VARCHAR},
+      show_status = #{showStatus,jdbcType=TINYINT},
+      is_hot = #{isHot,jdbcType=TINYINT},
+      on_sale_at = #{onSaleAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP}
+    where pro_id = #{proId,jdbcType=INTEGER}
+  </update>
+  
+  <select id="selectCountByShowStatus" parameterType="int" resultType="int">
+  	SELECT COUNT(*) from product p where p.show_status = #{showStatus}
+  </select>
+  
+  <resultMap type="com.mao.shop.po.Product" id="selectByShowStatusRm" extends="BaseResultMap">
+  	<result column="cateName" property="cateName"/>
+  	<result column="brandName" property="brandName"/>
+  	<result column="imgs" property="imgs"/>
+  </resultMap>
+  <select id="selectByShowStatus" parameterType="map" resultMap="selectByShowStatusRm">
+  		select cs.`name` cateName,pb.`name` brandName,p.*,img.filepath imgs 
+		from product p,category_second cs,product_brand pb,product_image img
+		where p.cat_id = cs.id AND p.brand_id = pb.id AND img.product_id = p.pro_id
+		AND img.sort_order = 1 AND p.show_status = #{showStatus}
+		ORDER BY p.pro_id DESC LIMIT #{begin},#{size}
+  </select>
+  
+  <resultMap type="com.mao.shop.po.ProductInfo" id="selectDetailRm" extends="ResultMapWithBLOBs">
+  	<result column="cateName" property="cateName"/>
+  	<result column="brandName" property="brandName"/>
+  	<collection property="imageList" ofType="com.mao.shop.po.ProductImage">
+  		<id column="pim_id" property="pimId" jdbcType="INTEGER" />
+	    <result column="product_id" property="productId" jdbcType="INTEGER" />
+	    <result column="image_name" property="imageName" jdbcType="VARCHAR" />
+	    <result column="filepath" property="filepath" jdbcType="VARCHAR" />
+	    <result column="sort_order" property="sortOrder" jdbcType="TINYINT" />
+  	</collection>
+  	<collection property="paraList" ofType="com.mao.shop.po.ProductAttrValue">
+  		<id column="pav_id" property="pavId" jdbcType="INTEGER" />
+	    <result column="product_id" property="productId" jdbcType="INTEGER" />
+	    <result column="attr_id" property="attrId" jdbcType="INTEGER" />
+	    <result column="attr_value" property="attrValue" jdbcType="VARCHAR" />
+	    <result column="attr_name" property="featureName" />
+  	</collection>
+  	<collection property="skuList" ofType="com.mao.shop.po.ProductSku">
+  		<id column="sku_id" property="skuId" jdbcType="INTEGER" />
+	    <result column="product_id" property="productId" jdbcType="INTEGER" />
+	    <result column="market_price" property="marketPrice" jdbcType="DECIMAL" />
+	    <result column="shop_price" property="shopPrice" jdbcType="DECIMAL" />
+	    <result column="stock" property="stock" jdbcType="INTEGER" />
+	    <result column="sku_name" property="skuName" jdbcType="VARCHAR" />
+	    <collection property="specList" ofType="com.mao.shop.po.ProductSpec">
+	    	<id column="sp_id" property="spId" jdbcType="INTEGER" />
+		    <result column="skuid" property="skuid" jdbcType="INTEGER" />
+		    <result column="attrid" property="attrid" jdbcType="INTEGER" />
+		    <result column="attrvalue" property="attrvalue" jdbcType="VARCHAR" />
+	    </collection>
+  	</collection>
+  </resultMap>
+  
+  <select id="selectDetail" parameterType="int" resultMap="selectDetailRm">
+  	select p.*,pa.*,pav.*,cs.`name` cateName,pb.`name` brandName,ps.*,sp.*,pim.*
+	from product p,product_attr pa,product_attr_value pav,category_second cs,
+	product_brand pb,product_sku ps,product_spec sp,product_image pim
+	where p.brand_id = pb.id
+	AND p.cat_id = cs.id
+	AND p.pro_id = pim.product_id
+	AND p.pro_id = pav.product_id
+	AND pav.attr_id = pa.pa_id
+	AND p.pro_id = ps.product_id
+	AND ps.sku_id = sp.skuid
+	AND p.pro_id = #{id}
+  </select>
+  
+  <update id="updateShowStatus" parameterType="map">
+  	update product p SET p.show_status = #{status} where p.pro_id = #{pid}
+  </update>
+  
+  <select id="selectCountByQuery" parameterType="map" resultType="int">
+  		SELECT COUNT(pp.pro_id) FROM (
+  		SELECT p.pro_id
+		FROM product p,product_sku ps
+		<where>
+			AND p.pro_id = ps.product_id
+			AND p.show_status = 1
+		<if test="minPrice != null">
+			AND ps.shop_price BETWEEN #{minPrice} AND #{maxPrice}
+		</if>
+		<if test="brandId != null">
+			AND p.brand_id = #{brandId}
+		</if>
+		<if test="cid != null">
+			AND p.cat_id = #{cid}
+		</if>
+		<if test="paraList != null">
+			<foreach collection="paraList" item="paraVal">
+			AND EXISTS(SELECT * FROM product_attr_value pav 
+			WHERE pav.product_id = p.pro_id AND pav.attr_value = #{paraVal})
+			</foreach>
+		</if>
+		</where>
+		GROUP BY p.pro_id ) pp
+  </select>
+  
+  <resultMap type="com.mao.shop.po.Product" id="selectProductByQueryRm">
+  	<id column="pro_id" property="proId" jdbcType="INTEGER" />
+    <result column="pname" property="pname" jdbcType="VARCHAR" />
+    <result column="imgs" property="imgs" jdbcType="VARCHAR" />
+   	<result column="price" property="price" jdbcType="DECIMAL" />
+  </resultMap>
+  <select id="selectProductByQuery" parameterType="map" resultMap="selectProductByQueryRm">
+  		SELECT MIN(ps.shop_price) price,pim.filepath imgs,p.pro_id,p.pname
+		FROM product p,product_image pim,product_sku ps
+		<where>
+			p.pro_id = pim.product_id
+			AND pim.sort_order = 1
+			AND p.pro_id = ps.product_id
+			AND p.show_status = 1
+		<if test="minPrice != null">
+			AND ps.shop_price BETWEEN #{minPrice} AND #{maxPrice}
+		</if>
+		<if test="brandId != null">
+			AND p.brand_id = #{brandId}
+		</if>
+		<if test="cid != null">
+			AND p.cat_id = #{cid}
+		</if>
+		<if test="paraList != null">
+			<foreach collection="paraList" item="paraVal">
+			AND EXISTS(SELECT * FROM product_attr_value pav 
+			WHERE pav.product_id = p.pro_id AND pav.attr_value = #{paraVal})
+			</foreach>
+		</if>
+		</where>
+		GROUP BY p.pro_id,p.pname
+		ORDER BY p.pro_id DESC
+		LIMIT #{begin},#{size}
+  </select>
+  
+  <resultMap type="com.mao.shop.po.Product" id="selectExpensiveRm" extends="selectProductByQueryRm">
+  	<result column="cat_id" property="catId"/>
+  </resultMap>
+  <select id="selectExpensive" resultMap="selectExpensiveRm">
+  	SELECT MIN(ps.shop_price) price,pim.filepath imgs,p.pro_id,p.pname,p.cat_id
+	FROM product p,product_image pim,product_sku ps
+	WHERE p.pro_id = pim.product_id
+				AND pim.sort_order = 1
+				AND p.pro_id = ps.product_id
+				AND p.show_status = 1
+				GROUP BY p.pro_id,p.pname,p.cat_id
+				ORDER BY ps.shop_price DESC
+	LIMIT 0,4
+  </select>
+  
+    <select id="selectNewProduct" resultMap="selectExpensiveRm">
+  	SELECT MIN(ps.shop_price) price,pim.filepath imgs,p.pro_id,p.pname,p.cat_id
+	FROM product p,product_image pim,product_sku ps
+	WHERE p.pro_id = pim.product_id
+				AND pim.sort_order = 1
+				AND p.pro_id = ps.product_id
+				AND p.show_status = 1
+				GROUP BY p.pro_id,p.pname,p.cat_id
+				ORDER BY p.on_sale_at DESC
+	LIMIT 0,6
+  </select>
+  
+  <select id="selectByCsid" parameterType="int" resultMap="selectExpensiveRm">
+  	SELECT MIN(ps.shop_price) price,pim.filepath imgs,p.pro_id,p.pname,p.cat_id 
+	FROM product p,product_image pim,product_sku ps
+	WHERE p.pro_id = pim.product_id
+	AND pim.sort_order = 1
+	AND p.pro_id = ps.product_id
+	AND p.show_status = 1
+	AND p.cat_id = #{csid}
+	GROUP BY p.pro_id,p.pname,p.cat_id
+  </select>
+</mapper>

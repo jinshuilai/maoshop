@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mao.shop.mapper.ProductSkuMapper" >
+  <resultMap id="BaseResultMap" type="com.mao.shop.po.ProductSku" >
+    <id column="sku_id" property="skuId" jdbcType="INTEGER" />
+    <result column="product_id" property="productId" jdbcType="INTEGER" />
+    <result column="market_price" property="marketPrice" jdbcType="DECIMAL" />
+    <result column="shop_price" property="shopPrice" jdbcType="DECIMAL" />
+    <result column="stock" property="stock" jdbcType="INTEGER" />
+    <result column="sku_name" property="skuName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    sku_id, product_id, market_price, shop_price, stock, sku_name
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from product_sku
+    where sku_id = #{skuId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from product_sku
+    where sku_id = #{skuId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mao.shop.po.ProductSku" >
+  <selectKey keyProperty="skuId" order="AFTER" resultType="java.lang.Integer">
+  		SELECT LAST_INSERT_ID()
+  	</selectKey>
+    insert into product_sku (sku_id, product_id, market_price, 
+      shop_price, stock, sku_name
+      )
+    values (#{skuId,jdbcType=INTEGER}, #{productId,jdbcType=INTEGER}, #{marketPrice,jdbcType=DECIMAL}, 
+      #{shopPrice,jdbcType=DECIMAL}, #{stock,jdbcType=INTEGER}, #{skuName,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.mao.shop.po.ProductSku" >
+    insert into product_sku
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="skuId != null" >
+        sku_id,
+      </if>
+      <if test="productId != null" >
+        product_id,
+      </if>
+      <if test="marketPrice != null" >
+        market_price,
+      </if>
+      <if test="shopPrice != null" >
+        shop_price,
+      </if>
+      <if test="stock != null" >
+        stock,
+      </if>
+      <if test="skuName != null" >
+        sku_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="skuId != null" >
+        #{skuId,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="marketPrice != null" >
+        #{marketPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="shopPrice != null" >
+        #{shopPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="stock != null" >
+        #{stock,jdbcType=INTEGER},
+      </if>
+      <if test="skuName != null" >
+        #{skuName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mao.shop.po.ProductSku" >
+    update product_sku
+    <set >
+      <if test="productId != null" >
+        product_id = #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="marketPrice != null" >
+        market_price = #{marketPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="shopPrice != null" >
+        shop_price = #{shopPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="stock != null" >
+        stock = #{stock,jdbcType=INTEGER},
+      </if>
+      <if test="skuName != null" >
+        sku_name = #{skuName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where sku_id = #{skuId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mao.shop.po.ProductSku" >
+    update product_sku
+    set product_id = #{productId,jdbcType=INTEGER},
+      market_price = #{marketPrice,jdbcType=DECIMAL},
+      shop_price = #{shopPrice,jdbcType=DECIMAL},
+      stock = #{stock,jdbcType=INTEGER},
+      sku_name = #{skuName,jdbcType=VARCHAR}
+    where sku_id = #{skuId,jdbcType=INTEGER}
+  </update>
+  
+  <select id="selectByPid" parameterType="int" resultMap="BaseResultMap">
+  	select * from product_sku where product_id = #{pid}
+  </select>
+  
+  <delete id="deleteByPid" parameterType="int">
+  	delete from product_sku where product_id = #{pid}
+  </delete>
+  
+  <resultMap type="com.mao.shop.po.ProductSku" id="selectDetailRm" extends="BaseResultMap">
+  	<association property="product" javaType="com.mao.shop.po.Product">
+  		<id column="pro_id" property="proId" jdbcType="INTEGER" />
+	    <result column="cat_id" property="catId" jdbcType="INTEGER" />
+	    <result column="brand_id" property="brandId" jdbcType="INTEGER" />
+	    <result column="pname" property="pname" jdbcType="VARCHAR" />
+	    <result column="tag" property="tag" jdbcType="VARCHAR" />
+	    <result column="short_desc" property="shortDesc" jdbcType="VARCHAR" />
+	    <result column="show_status" property="showStatus" jdbcType="TINYINT" />
+	    <result column="is_hot" property="isHot" jdbcType="TINYINT" />
+	    <result column="on_sale_at" property="onSaleAt" jdbcType="TIMESTAMP" />
+	    <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+	    <result column="imgs" property="imgs"/>
+  	</association>
+  	<collection property="specList" ofType="com.mao.shop.po.ProductSpec">
+  		<id column="sp_id" property="spId" jdbcType="INTEGER" />
+	    <result column="skuid" property="skuid" jdbcType="INTEGER" />
+	    <result column="attrid" property="attrid" jdbcType="INTEGER" />
+	    <result column="attrvalue" property="attrvalue" jdbcType="VARCHAR" />
+  	</collection>
+  </resultMap>
+  <select id="selectSkuDetail" parameterType="int" resultMap="selectDetailRm">
+  	select ps.*,p.*,psp.*,pim.filepath imgs
+	from product_sku ps,product p,product_spec psp,product_image pim
+	WHERE ps.product_id = p.pro_id
+	AND p.pro_id = pim.product_id
+	AND pim.sort_order = 1
+	AND ps.sku_id = psp.skuid
+	AND ps.sku_id = #{id}
+  </select>
+  
+  <update id="updateStock" parameterType="map">
+  	update product_sku t set t.stock = t.stock - #{quantity}
+	WHERE t.sku_id = #{skuId} AND t.stock >= ${quantity}
+  </update>
+</mapper>
